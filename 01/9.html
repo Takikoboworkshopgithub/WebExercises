@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Model</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f1eef7;
+            font-family: Arial, sans-serif;
+            color: #29243a;
+        }
+
+        header {
+            background: #241b3a;
+            color: white;
+            padding: 28px;
+        }
+
+        main {
+            width: min(90%, 760px);
+            margin: 36px auto;
+        }
+
+        .card {
+            width: 100%;
+            padding: 28px;
+            border: 2px solid #d8cfea;
+            border-radius: 14px;
+            margin: 0 0 24px;
+            background: white;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #e9e3f5;
+            color: #514078;
+            border-radius: 999px;
+        }
+
+        button {
+            padding: 10px 18px;
+            border: 0;
+            border-radius: 8px;
+            background: #6e52a3;
+            color: white;
+        }
+
+        .compact {
+            padding: 24px;
+            border: 1px solid #d8cfea;
+            border-radius: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Box Model</h1>
+        <p>余白と境界線を使ってカードをデザインしよう。</p>
+    </header>
+
+    <main>
+
+        <div class="card">
+            <span class="tag">CSS BASIC</span>
+            <h2>ボックスモデル</h2>
+            <p>要素の大きさは、content・padding・border・marginから構成されます。</p>
+            <button>詳しく見る</button>
+        </div>
+
+        <div class="card compact">
+            <h2>もう一つのカード</h2>
+            <p>同じ幅を指定しても、box-sizingの設定によって外側の大きさが変わります。</p>
+        </div>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Priority</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f3fa;
+            color: #29243a;
+        }
+
+        header {
+            background: #241b3a;
+            color: white;
+            padding: 24px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        p {
+            color: #3974b8;
+        }
+
+        .message {
+            color: #27845f;
+        }
+
+        #target {
+            /* TODO: IDセレクタの色を指定 */
+        }
+
+        .message.special {
+            /* TODO: クラスを2つ組み合わせた指定 */
+        }
+
+        .message {
+            /* TODO: 同じ詳細度で後から上書きしてみる */
+        }
+
+        .hint {
+            margin-top: 28px;
+            padding: 16px;
+            background: #e9e3f5;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>CSSの優先順位</h1>
+    </header>
+
+    <main>
+
+        <p class="message" id="target">
+            この文章に適用される文字色を予想してみましょう。
+        </p>
+
+        <p class="message special">
+            この文章にも複数のルールが適用されます。
+        </p>
+
+        <div class="hint">
+            開発者ツールで、どのCSSルールが適用・上書きされているか確認しましょう。
+        </div>
+
+    </main>
+
+</body>
+</html>

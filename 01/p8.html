@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Layout</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #29243a;
+        }
+
+        .site-header {
+            background: #241b3a;
+            color: white;
+            padding: 18px 28px;
+        }
+
+        .header-inner {
+            /* TODO: ロゴとnavを横並びにする */
+        }
+
+        .logo {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            letter-spacing: .08em;
+        }
+
+        .global-nav {
+            /* TODO: リンクを横並びにする */
+        }
+
+        .global-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+        }
+
+        .layout {
+            /* TODO: サイドバーとコンテンツを横並びにする */
+            max-width: 1100px;
+            margin: 28px auto;
+            padding: 0 20px;
+        }
+
+        .sidebar {
+            /* TODO: サイドバーの幅・背景・余白を設定 */
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 8px;
+            color: #51466d;
+        }
+
+        .content {
+            /* TODO: メイン領域が残りの幅を使うようにする */
+        }
+
+        .content section {
+            background: #f1eef7;
+            padding: 24px;
+            margin-bottom: 18px;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 650px) {
+            /* TODO: 狭い画面では縦並びにする */
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="logo" href="#">WEB DESIGN</a>
+
+            <nav class="global-nav">
+                <a href="#about">概要</a>
+                <a href="#news">お知らせ</a>
+                <a href="#contact">お問い合わせ</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="layout">
+
+        <aside class="sidebar">
+            <h2>メニュー</h2>
+            <a href="#about">このサイトについて</a>
+            <a href="#news">新着情報</a>
+            <a href="#contact">お問い合わせ</a>
+        </aside>
+
+        <main class="content">
+
+            <section id="about">
+                <h1>Web Design</h1>
+                <p>ナビゲーションとサイドバーを使ったページレイアウトです。</p>
+            </section>
+
+            <section id="news">
+                <h2>お知らせ</h2>
+                <p>ここにお知らせの内容を表示します。</p>
+            </section>
+
+            <section id="contact">
+                <h2>お問い合わせ</h2>
+                <p>ここにお問い合わせの案内を表示します。</p>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -630,7 +630,6 @@
             color: var(--danger);
         }
 
-        .status.error + .status-indicator,
         .status-indicator.error {
             background: var(--danger);
         }
@@ -677,12 +676,24 @@
             text-align: center;
         }
 
-        .preview-frame {
-            display: block;
-            width: 100%;
-            height: 440px;
-            border: none;
-            background: white;
+        .preview-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+
+            min-height: 190px;
+            padding: 30px;
+
+            background: #f5f5f5;
+            color: #555;
+            text-align: center;
+        }
+
+        .preview-content p {
+            margin: 0;
+            font-size: 0.85rem;
         }
 
         /* Buttons */
@@ -880,10 +891,6 @@
             .editor {
                 min-height: 320px;
             }
-
-            .preview-frame {
-                height: 360px;
-            }
         }
 
         @media (max-width: 480px) {
@@ -918,10 +925,6 @@
 
             .section-tag {
                 display: none;
-            }
-
-            .preview-frame {
-                height: 320px;
             }
 
             footer {
@@ -1071,7 +1074,7 @@
                             <span id="status-indicator" class="status-indicator"></span>
 
                             <p id="editor-status" class="status">
-                                HTMLを編集すると、プレビューが更新されます。
+                                HTMLを編集してから、プレビューを開いてください。
                             </p>
                         </div>
 
@@ -1089,12 +1092,12 @@
                             <div>
                                 <h2>Live Preview</h2>
                                 <span class="section-description">
-                                    編集したコードの表示結果
+                                    編集したHTMLを新しいタブで表示します。
                                 </span>
                             </div>
                         </div>
 
-                        <span class="section-tag">LIVE</span>
+                        <span class="section-tag">PREVIEW</span>
                     </div>
 
                     <div class="preview-container">
@@ -1107,16 +1110,23 @@
                             </div>
 
                             <div class="preview-address">
-                                localhost:8000 / preview
+                                Local HTML Preview
                             </div>
                         </div>
 
-                        <iframe
-                            id="preview"
-                            class="preview-frame"
-                            title="HTML preview"
-                            sandbox="allow-scripts"
-                        ></iframe>
+                        <div class="preview-content">
+                            <p>
+                                現在のHTMLコードを新しいタブで開きます。
+                            </p>
+
+                            <button
+                                id="preview-button"
+                                class="button primary"
+                                type="button"
+                            >
+                                プレビューを開く ↗
+                            </button>
+                        </div>
 
                     </div>
 
@@ -1185,7 +1195,7 @@
         const instructionList = document.getElementById("instruction-list");
 
         const editor = document.getElementById("code-editor");
-        const preview = document.getElementById("preview");
+        const previewButton = document.getElementById("preview-button");
 
         const answerLink = document.getElementById("answer-link");
         const answerCode = document.getElementById("answer-code");
@@ -1197,11 +1207,11 @@
         let problems = [];
         let currentProblemId = null;
 
-        // Preview update timer
-        let previewTimer = null;
-
         // Request control
         let requestId = 0;
+
+        // Keep generated Blob URLs alive while their tabs are using them.
+        const previewUrls = new Set();
 
         // Animation helper
         function animate(targets, options) {
@@ -1380,11 +1390,8 @@
                 // Set answer code
                 answerCode.textContent = solutionCode;
 
-                // Update preview
-                updatePreview();
-
                 setEditorStatus(
-                    "HTMLを編集すると、プレビューが更新されます。"
+                    "HTMLを編集してから、プレビューを開いてください。"
                 );
 
             } catch (error) {
@@ -1394,23 +1401,53 @@
 
                 editor.value = "";
                 answerCode.textContent = "";
-                preview.srcdoc = "";
 
                 setEditorStatus(error.message, true);
             }
         }
 
-        // Update preview
-        function updatePreview() {
-            clearTimeout(previewTimer);
+        // Open edited HTML in a new tab
+        function openPreview() {
+            const html = editor.value;
 
-            previewTimer = setTimeout(() => {
-                preview.srcdoc = editor.value;
-            }, 250);
+            if (!html.trim()) {
+                setEditorStatus("HTMLコードが入力されていません。", true);
+                return;
+            }
+
+            // Create a Blob from the HTML source
+            const blob = new Blob(
+                [html],
+                { type: "text/html;charset=utf-8" }
+            );
+
+            // Generate a temporary URL
+            const previewUrl = URL.createObjectURL(blob);
+
+            // Open the preview in a new tab
+            const newWindow = window.open(previewUrl, "_blank");
+
+            if (!newWindow) {
+                URL.revokeObjectURL(previewUrl);
+
+                setEditorStatus(
+                    "新しいタブを開けませんでした。ポップアップを許可してください。",
+                    true
+                );
+
+                return;
+            }
+
+            // Keep the URL valid while the new tab is using it.
+            previewUrls.add(previewUrl);
+
+            setEditorStatus(
+                "新しいタブでプレビューを開きました。"
+            );
         }
 
-        // Update preview when editing
-        editor.addEventListener("input", updatePreview);
+        // Open preview button
+        previewButton.addEventListener("click", openPreview);
 
         // Tab key support
         editor.addEventListener("keydown", event => {
@@ -1426,8 +1463,6 @@
                     end,
                     "end"
                 );
-
-                updatePreview();
             }
         });
 
@@ -1490,3 +1525,4 @@
 
 </body>
 </html>
+```

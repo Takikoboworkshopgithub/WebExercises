@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Model</title>
+    <style>
+        * {
+            /* TODO: box-sizingを設定してみよう */
+        }
+
+        body {
+            margin: 0;
+            background: #f1eef7;
+            font-family: Arial, sans-serif;
+            color: #29243a;
+        }
+
+        header {
+            background: #241b3a;
+            color: white;
+            padding: 28px;
+        }
+
+        main {
+            width: min(90%, 760px);
+            margin: 36px auto;
+        }
+
+        .card {
+            /* TODO: 幅・内側余白・境界線・外側余白を設定 */
+            background: white;
+        }
+
+        .tag {
+            display: inline-block;
+            /* TODO: ラベルの余白や背景を設定 */
+        }
+
+        button {
+            /* TODO: ボタンのpadding、border、角丸を設定 */
+        }
+
+        .compact {
+            /* TODO: 2枚目のカードにも余白を設定 */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Box Model</h1>
+        <p>余白と境界線を使ってカードをデザインしよう。</p>
+    </header>
+
+    <main>
+
+        <div class="card">
+            <span class="tag">CSS BASIC</span>
+            <h2>ボックスモデル</h2>
+            <p>要素の大きさは、content・padding・border・marginから構成されます。</p>
+            <button>詳しく見る</button>
+        </div>
+
+        <div class="card compact">
+            <h2>もう一つのカード</h2>
+            <p>同じ幅を指定しても、box-sizingの設定によって外側の大きさが変わります。</p>
+        </div>
+
+    </main>
+
+</body>
+</html>
