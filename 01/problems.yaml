@@ -1,0 +1,49 @@
+- id: 1
+  title: "HTMLの基本構造"
+  description: "h1、h2、pを使って簡単なWebページを作成しましょう。"
+  instructions:
+    - "ページのタイトルをh1で作成してください。"
+    - "見出しをh2で作成してください。"
+    - "本文をpで作成してください。"
+
+- id: 2
+  title: "強調表示"
+  description: "文章の一部分をstrong要素で強調しましょう。"
+  instructions:
+    - "p要素の中にstrong要素を入れてください。"
+
+- id: 3
+  title: "ハイパーリンク"
+  description: "a要素を使って別のWebサイトへ移動できるようにしましょう。"
+  instructions:
+    - "リンク先をhttps://developer.mozilla.org/ja/にしてください。"
+    - "target属性は指定しないでください。"
+
+- id: 4
+  title: "ページ内リンクと目次"
+  description: "id属性を利用して、ページ内の各見出しへ移動できる目次を作成しましょう。"
+  instructions:
+    - "各セクションのidを確認してください。"
+    - "目次のリンク先を正しく指定してください。"
+
+- id: 5
+  title: "リスト"
+  description: "ul、ol、liを使ってリストを作成しましょう。"
+  instructions:
+    - "順序のないリストを作成してください。"
+    - "順序のあるリストを作成してください。"
+
+- id: 6
+  title: "CSSの基本"
+  description: "style要素を使ってHTMLにCSSを追加しましょう。"
+  instructions:
+    - "h1の文字色を青色にしてください。"
+    - "h1の文字サイズを大きくしてください。"
+    - "pの背景色を設定してください。"
+
+- id: 7
+  title: "divとclassによるレイアウト"
+  description: "div要素とclass属性を使って、各領域にCSSを適用しましょう。"
+  instructions:
+    - "top、menu、contentの各クラスにCSSを設定してください。"
+    - "HTMLの構造は変更せず、CSSだけを記述してください。"

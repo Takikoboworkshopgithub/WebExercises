@@ -1,0 +1,1492 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0c0914">
+
+    <title>Chapter 01 | HTML & CSS</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- YAML parser -->
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+
+    <!-- Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <style>
+        :root {
+            color-scheme: dark;
+
+            --background: #0c0914;
+            --surface: rgba(25, 19, 44, 0.76);
+            --surface-solid: #19132c;
+            --surface-hover: #241d3b;
+            --surface-light: rgba(255, 255, 255, 0.035);
+
+            --border: rgba(208, 188, 255, 0.13);
+            --border-hover: rgba(208, 188, 255, 0.35);
+
+            --text: #f0ecf8;
+            --subtext: #a49ab9;
+            --muted: #706681;
+
+            --accent: #d0bcff;
+            --accent-strong: #a98aff;
+            --accent-dark: #37265c;
+
+            --teal: #79e2d0;
+            --amber: #ffcb85;
+            --pink: #f5a5df;
+
+            --success: #79e2d0;
+            --danger: #ff8f9b;
+
+            --radius: 12px;
+            --radius-large: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background:
+                radial-gradient(
+                    ellipse at 15% 0%,
+                    rgba(108, 72, 166, 0.16),
+                    transparent 42%
+                ),
+                radial-gradient(
+                    ellipse at 90% 70%,
+                    rgba(77, 91, 151, 0.09),
+                    transparent 40%
+                ),
+                var(--background);
+            color: var(--text);
+            font-family:
+                "Manrope",
+                "Noto Sans JP",
+                system-ui,
+                sans-serif;
+            line-height: 1.7;
+        }
+
+        button,
+        textarea,
+        a {
+            font: inherit;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* Background decoration */
+
+        .background-glow {
+            position: fixed;
+            z-index: -1;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: rgba(151, 107, 255, 0.055);
+            filter: blur(100px);
+            pointer-events: none;
+        }
+
+        .glow-one {
+            top: 20%;
+            left: -220px;
+        }
+
+        .glow-two {
+            right: -220px;
+            bottom: 0;
+            background: rgba(91, 180, 196, 0.045);
+        }
+
+        /* Header */
+
+        header {
+            position: sticky;
+            z-index: 20;
+            top: 0;
+            height: 66px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(12, 9, 20, 0.84);
+            backdrop-filter: blur(18px);
+        }
+
+        .header-inner {
+            width: 100%;
+            max-width: 1600px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 32px;
+
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--subtext);
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .back-arrow {
+            font-size: 1.1rem;
+        }
+
+        .header-divider {
+            width: 1px;
+            height: 22px;
+            background: var(--border);
+        }
+
+        .header-brand {
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+
+        .header-brand span {
+            color: var(--accent);
+        }
+
+        .header-right {
+            margin-left: auto;
+            color: var(--muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+        }
+
+        /* Layout */
+
+        .layout {
+            display: grid;
+            grid-template-columns: 260px minmax(0, 1fr);
+            width: 100%;
+            max-width: 1600px;
+            min-height: calc(100vh - 66px);
+            margin: 0 auto;
+        }
+
+        /* Sidebar */
+
+        aside {
+            position: sticky;
+            top: 66px;
+            align-self: start;
+            height: calc(100vh - 66px);
+            overflow-y: auto;
+
+            padding: 32px 20px;
+            border-right: 1px solid var(--border);
+            background: rgba(18, 14, 30, 0.42);
+        }
+
+        .sidebar-top {
+            margin-bottom: 28px;
+        }
+
+        .sidebar-heading {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+        }
+
+        .sidebar-chapter {
+            margin-top: 7px;
+            color: var(--text);
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .sidebar-subtitle {
+            margin-top: 3px;
+            color: var(--subtext);
+            font-size: 0.75rem;
+        }
+
+        .sidebar-section-label {
+            margin: 0 0 12px 8px;
+            color: var(--muted);
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+        }
+
+        #problem-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .problem-button {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            width: 100%;
+            min-height: 46px;
+            padding: 10px 12px;
+
+            overflow: hidden;
+            border: 1px solid transparent;
+            border-radius: 9px;
+
+            background: transparent;
+            color: var(--subtext);
+            text-align: left;
+
+            transition:
+                background 0.2s,
+                border-color 0.2s,
+                color 0.2s,
+                transform 0.2s;
+        }
+
+        .problem-button:hover {
+            transform: translateX(3px);
+            background: var(--surface-light);
+            color: var(--text);
+        }
+
+        .problem-button.active {
+            border-color: rgba(208, 188, 255, 0.22);
+            background: rgba(169, 138, 255, 0.13);
+            color: var(--text);
+        }
+
+        .problem-button.active::before {
+            position: absolute;
+            top: 9px;
+            bottom: 9px;
+            left: 0;
+            width: 3px;
+            border-radius: 4px;
+            background: var(--accent);
+            content: "";
+        }
+
+        .problem-number {
+            min-width: 25px;
+            color: var(--muted);
+            font-family: "Manrope", sans-serif;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        .problem-button.active .problem-number {
+            color: var(--accent);
+        }
+
+        .problem-name {
+            overflow: hidden;
+            font-size: 0.83rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-footer {
+            margin-top: 32px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .sidebar-footer-label {
+            color: var(--accent);
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+        }
+
+        .sidebar-footer-text {
+            margin-top: 5px;
+            color: var(--subtext);
+            font-size: 0.72rem;
+            line-height: 1.6;
+        }
+
+        /* Main */
+
+        main {
+            min-width: 0;
+            padding: 44px clamp(24px, 4vw, 64px) 60px;
+        }
+
+        .main-inner {
+            width: 100%;
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        .page-heading {
+            margin-bottom: 30px;
+        }
+
+        .chapter-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            color: var(--accent);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+        }
+
+        .chapter-label::before {
+            width: 22px;
+            height: 1px;
+            background: var(--accent);
+            content: "";
+        }
+
+        h1 {
+            margin: 10px 0 8px;
+            font-size: clamp(1.55rem, 3vw, 2.2rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.35;
+        }
+
+        .description {
+            margin: 0;
+            color: var(--subtext);
+            font-size: 0.9rem;
+        }
+
+        /* Common card */
+
+        .panel {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-large);
+            background: var(--surface);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+            backdrop-filter: blur(12px);
+        }
+
+        /* Instructions */
+
+        .instructions {
+            position: relative;
+            overflow: hidden;
+            margin: 28px 0 38px;
+            padding: 22px 26px;
+        }
+
+        .instructions::before {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 3px;
+            background: linear-gradient(
+                to bottom,
+                var(--accent),
+                var(--teal)
+            );
+            content: "";
+        }
+
+        .instructions-heading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .instructions-icon {
+            display: grid;
+            place-items: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(208, 188, 255, 0.12);
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .instructions h2 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .instructions ul {
+            margin: 0;
+            padding-left: 22px;
+            color: var(--subtext);
+            font-size: 0.85rem;
+        }
+
+        .instructions li + li {
+            margin-top: 5px;
+        }
+
+        .instructions li::marker {
+            color: var(--accent);
+        }
+
+        /* Sections */
+
+        .section {
+            margin-top: 38px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .section-title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-icon {
+            display: grid;
+            place-items: center;
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(208, 188, 255, 0.07);
+            color: var(--accent);
+            font-size: 0.95rem;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .section-description {
+            display: block;
+            margin-top: 2px;
+            color: var(--muted);
+            font-size: 0.73rem;
+        }
+
+        .section-tag {
+            padding: 4px 9px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--subtext);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+        }
+
+        /* Editor */
+
+        .editor-container {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: #110e1b;
+            transition: border-color 0.2s;
+        }
+
+        .editor-container:focus-within {
+            border-color: rgba(208, 188, 255, 0.55);
+        }
+
+        .editor-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 42px;
+            padding: 0 15px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .editor-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .editor-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #554a68;
+        }
+
+        .editor-dot:nth-child(1) {
+            background: #f08d9c;
+        }
+
+        .editor-dot:nth-child(2) {
+            background: #e9c17d;
+        }
+
+        .editor-dot:nth-child(3) {
+            background: #83d5ad;
+        }
+
+        .editor-filename {
+            color: var(--muted);
+            font-family: monospace;
+            font-size: 0.72rem;
+        }
+
+        .editor {
+            display: block;
+            width: 100%;
+            min-height: 380px;
+            resize: vertical;
+            padding: 20px;
+
+            border: none;
+            outline: none;
+            background: transparent;
+            color: #ded5f5;
+
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                "Liberation Mono",
+                monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            tab-size: 4;
+        }
+
+        .editor::placeholder {
+            color: #655b76;
+        }
+
+        .editor-status-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 38px;
+            padding: 0 15px;
+            border-top: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .status-indicator {
+            width: 6px;
+            height: 6px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: var(--teal);
+        }
+
+        .status {
+            min-height: 24px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.72rem;
+        }
+
+        .status.error {
+            color: var(--danger);
+        }
+
+        .status.error + .status-indicator,
+        .status-indicator.error {
+            background: var(--danger);
+        }
+
+        /* Preview */
+
+        .preview-container {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: #f5f5f5;
+        }
+
+        .preview-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            height: 42px;
+            padding: 0 14px;
+            border-bottom: 1px solid #dedede;
+            background: #eeeef2;
+        }
+
+        .preview-dots {
+            display: flex;
+            gap: 5px;
+        }
+
+        .preview-dots span {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #c4c4ca;
+        }
+
+        .preview-address {
+            flex: 1;
+            padding: 3px 10px;
+            border-radius: 5px;
+            background: #e2e2e8;
+            color: #777783;
+            font-family: monospace;
+            font-size: 0.65rem;
+            text-align: center;
+        }
+
+        .preview-frame {
+            display: block;
+            width: 100%;
+            height: 440px;
+            border: none;
+            background: white;
+        }
+
+        /* Buttons */
+
+        .button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+
+            min-height: 39px;
+            padding: 8px 15px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: rgba(255, 255, 255, 0.035);
+            color: var(--text);
+
+            font-size: 0.8rem;
+            font-weight: 600;
+
+            transition:
+                background 0.2s,
+                border-color 0.2s,
+                transform 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+            border-color: var(--border-hover);
+            background: var(--surface-hover);
+        }
+
+        .button.primary {
+            border-color: rgba(208, 188, 255, 0.35);
+            background: var(--accent);
+            color: #171020;
+            font-weight: 800;
+        }
+
+        .button.primary:hover {
+            border-color: var(--accent);
+            background: #e0d2ff;
+        }
+
+        /* Answer */
+
+        .answer-box {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+        }
+
+        .answer-box summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 54px;
+            padding: 0 18px;
+            cursor: pointer;
+            color: var(--text);
+            font-size: 0.83rem;
+            font-weight: 600;
+            list-style: none;
+            transition: background 0.2s;
+        }
+
+        .answer-box summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .answer-box summary::after {
+            color: var(--accent);
+            content: "+";
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .answer-box[open] summary::after {
+            content: "−";
+        }
+
+        .answer-box summary:hover {
+            background: var(--surface-hover);
+        }
+
+        .answer-code {
+            overflow-x: auto;
+            margin: 0;
+            padding: 20px;
+
+            border-top: 1px solid var(--border);
+            background: #110e1b;
+            color: #ded5f5;
+
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                "Liberation Mono",
+                monospace;
+            font-size: 12px;
+            line-height: 1.8;
+            white-space: pre;
+        }
+
+        .answer-link-area {
+            margin: 0 0 15px;
+        }
+
+        /* Footer */
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 55px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.7rem;
+        }
+
+        footer span:last-child {
+            color: var(--accent);
+            letter-spacing: 0.08em;
+        }
+
+        /* Loading */
+
+        .loading {
+            padding: 12px;
+            color: var(--subtext);
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 900px) {
+            .layout {
+                grid-template-columns: 220px minmax(0, 1fr);
+            }
+
+            aside {
+                padding: 28px 14px;
+            }
+
+            main {
+                padding: 35px 24px 50px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .layout {
+                display: flex;
+                flex-direction: column;
+            }
+
+            aside {
+                position: static;
+                width: 100%;
+                height: auto;
+                padding: 20px;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .sidebar-top {
+                margin-bottom: 18px;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            #problem-list {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .problem-button {
+                min-height: 42px;
+                padding: 8px 10px;
+            }
+
+            main {
+                padding: 30px 20px 45px;
+            }
+
+            .instructions {
+                padding: 18px 20px;
+            }
+
+            .editor {
+                min-height: 320px;
+            }
+
+            .preview-frame {
+                height: 360px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-inner {
+                gap: 12px;
+                padding: 0 16px;
+            }
+
+            .header-brand {
+                font-size: 0.76rem;
+            }
+
+            .header-right {
+                display: none;
+            }
+
+            .header-divider {
+                display: none;
+            }
+
+            #problem-list {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            main {
+                padding: 26px 15px 40px;
+            }
+
+            .section-header {
+                align-items: flex-start;
+            }
+
+            .section-tag {
+                display: none;
+            }
+
+            .preview-frame {
+                height: 320px;
+            }
+
+            footer {
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-inner">
+
+            <a class="back-link" href="../index.html">
+                <span class="back-arrow">←</span>
+                <span>Chapters</span>
+            </a>
+
+            <div class="header-divider"></div>
+
+            <div class="header-brand">
+                Web<span>Exercises</span>
+            </div>
+
+            <div class="header-right">
+                WEB DEVELOPMENT INTRODUCTION
+            </div>
+
+        </div>
+    </header>
+
+    <div class="layout">
+
+        <!-- Sidebar -->
+        <aside>
+
+            <div class="sidebar-top">
+                <p class="sidebar-heading">LEARNING MATERIAL</p>
+                <div class="sidebar-chapter">Chapter 01</div>
+                <div class="sidebar-subtitle">HTML & CSS Basics</div>
+            </div>
+
+            <p class="sidebar-section-label">PROBLEMS</p>
+
+            <div id="problem-list">
+                <p class="loading">問題を読み込んでいます...</p>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-footer-label">LEARNING TIP</div>
+                <div class="sidebar-footer-text">
+                    コードを書き換えながら、HTMLとCSSの仕組みを理解していきましょう。
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- Main -->
+        <main>
+            <div class="main-inner">
+
+                <!-- Heading -->
+                <div class="page-heading">
+                    <div class="chapter-label">CHAPTER 01</div>
+
+                    <h1 id="problem-title">
+                        問題を選択してください
+                    </h1>
+
+                    <p id="problem-description" class="description">
+                        左側の一覧から問題を選択してください。
+                    </p>
+                </div>
+
+                <!-- Instructions -->
+                <section class="instructions panel">
+
+                    <div class="instructions-heading">
+                        <div class="instructions-icon">✦</div>
+                        <h2>課題内容</h2>
+                    </div>
+
+                    <ul id="instruction-list">
+                        <li>問題を選択してください。</li>
+                    </ul>
+
+                </section>
+
+                <!-- Editor -->
+                <section class="section">
+
+                    <div class="section-header">
+                        <div class="section-title-group">
+                            <div class="section-icon">⌨</div>
+
+                            <div>
+                                <h2>Code Editor</h2>
+                                <span class="section-description">
+                                    コメントで指定された箇所を埋めてください。
+                                </span>
+                            </div>
+                        </div>
+
+                        <span class="section-tag">HTML</span>
+                    </div>
+
+                    <div class="editor-container">
+
+                        <div class="editor-toolbar">
+                            <div class="editor-dots">
+                                <span class="editor-dot"></span>
+                                <span class="editor-dot"></span>
+                                <span class="editor-dot"></span>
+                            </div>
+
+                            <span class="editor-filename">
+                                index.html
+                            </span>
+                        </div>
+
+                        <textarea
+                            id="code-editor"
+                            class="editor"
+                            spellcheck="false"
+                            autocomplete="off"
+                            autocapitalize="off"
+                            placeholder="問題を選択するとコードが表示されます。"
+                        ></textarea>
+
+                        <div class="editor-status-row">
+                            <span id="status-indicator" class="status-indicator"></span>
+
+                            <p id="editor-status" class="status">
+                                HTMLを編集すると、プレビューが更新されます。
+                            </p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- Preview -->
+                <section class="section">
+
+                    <div class="section-header">
+                        <div class="section-title-group">
+                            <div class="section-icon">◫</div>
+
+                            <div>
+                                <h2>Live Preview</h2>
+                                <span class="section-description">
+                                    編集したコードの表示結果
+                                </span>
+                            </div>
+                        </div>
+
+                        <span class="section-tag">LIVE</span>
+                    </div>
+
+                    <div class="preview-container">
+
+                        <div class="preview-toolbar">
+                            <div class="preview-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                            <div class="preview-address">
+                                localhost:8000 / preview
+                            </div>
+                        </div>
+
+                        <iframe
+                            id="preview"
+                            class="preview-frame"
+                            title="HTML preview"
+                            sandbox="allow-scripts"
+                        ></iframe>
+
+                    </div>
+
+                </section>
+
+                <!-- Answer -->
+                <section class="section">
+
+                    <div class="section-header">
+                        <div class="section-title-group">
+                            <div class="section-icon">✧</div>
+
+                            <div>
+                                <h2>Answer</h2>
+                                <span class="section-description">
+                                    正解のサイトとコードを確認できます。
+                                </span>
+                            </div>
+                        </div>
+
+                        <span class="section-tag">SOLUTION</span>
+                    </div>
+
+                    <p class="answer-link-area">
+                        <a
+                            id="answer-link"
+                            class="button primary"
+                            href="#"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            正解のサイトを見る ↗
+                        </a>
+                    </p>
+
+                    <details class="answer-box">
+                        <summary>
+                            正解のコードを表示する
+                        </summary>
+
+                        <pre class="answer-code"><code id="answer-code"></code></pre>
+                    </details>
+
+                </section>
+
+                <footer>
+                    <span>
+                        Web Development Introduction / Chapter 01
+                    </span>
+
+                    <span>
+                        WEBEXERCISES
+                    </span>
+                </footer>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        // DOM elements
+        const problemList = document.getElementById("problem-list");
+        const problemTitle = document.getElementById("problem-title");
+        const problemDescription = document.getElementById("problem-description");
+        const instructionList = document.getElementById("instruction-list");
+
+        const editor = document.getElementById("code-editor");
+        const preview = document.getElementById("preview");
+
+        const answerLink = document.getElementById("answer-link");
+        const answerCode = document.getElementById("answer-code");
+
+        const editorStatus = document.getElementById("editor-status");
+        const statusIndicator = document.getElementById("status-indicator");
+
+        // Current problem
+        let problems = [];
+        let currentProblemId = null;
+
+        // Preview update timer
+        let previewTimer = null;
+
+        // Request control
+        let requestId = 0;
+
+        // Animation helper
+        function animate(targets, options) {
+            if (window.anime) {
+                anime({
+                    targets,
+                    ...options
+                });
+            }
+        }
+
+        // Load problems.yaml
+        async function loadProblems() {
+            try {
+                const response = await fetch("./problems.yaml");
+
+                if (!response.ok) {
+                    throw new Error("problems.yamlを読み込めませんでした。");
+                }
+
+                const yamlText = await response.text();
+
+                problems = jsyaml.load(yamlText);
+
+                if (!Array.isArray(problems) || problems.length === 0) {
+                    throw new Error("問題データが正しくありません。");
+                }
+
+                renderProblemList();
+
+                // URLに ?id=1 があれば、その問題を開く
+                const params = new URLSearchParams(location.search);
+                const requestedId = params.get("id");
+
+                const initialProblem = problems.find(
+                    problem => String(problem.id) === requestedId
+                ) || problems[0];
+
+                await selectProblem(initialProblem.id);
+
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        // Render problem list
+        function renderProblemList() {
+            problemList.replaceChildren();
+
+            problems.forEach((problem, index) => {
+                const button = document.createElement("button");
+
+                button.className = "problem-button";
+                button.type = "button";
+                button.dataset.id = problem.id;
+
+                const number = document.createElement("span");
+                number.className = "problem-number";
+                number.textContent = String(problem.id).padStart(2, "0");
+
+                const name = document.createElement("span");
+                name.className = "problem-name";
+                name.textContent = problem.title;
+
+                button.append(number, name);
+
+                button.addEventListener("click", () => {
+                    selectProblem(problem.id);
+                });
+
+                problemList.appendChild(button);
+
+                // Staggered entrance
+                if (window.anime) {
+                    anime({
+                        targets: button,
+                        opacity: [0, 1],
+                        translateX: [-8, 0],
+                        duration: 350,
+                        delay: index * 35,
+                        easing: "easeOutCubic"
+                    });
+                }
+            });
+        }
+
+        // Select a problem
+        async function selectProblem(id) {
+            const problem = problems.find(
+                item => String(item.id) === String(id)
+            );
+
+            if (!problem) {
+                return;
+            }
+
+            // Prevent outdated requests from overwriting newer selections
+            const thisRequest = ++requestId;
+
+            currentProblemId = problem.id;
+
+            // Update sidebar
+            document.querySelectorAll(".problem-button").forEach(button => {
+                const active =
+                    String(button.dataset.id) === String(id);
+
+                button.classList.toggle("active", active);
+            });
+
+            const activeButton = document.querySelector(
+                `.problem-button[data-id="${CSS.escape(String(id))}"]`
+            );
+
+            if (activeButton) {
+                animate(activeButton, {
+                    translateX: [3, 0],
+                    duration: 250,
+                    easing: "easeOutCubic"
+                });
+            }
+
+            // Update URL
+            const url = new URL(location.href);
+            url.searchParams.set("id", id);
+            history.replaceState(null, "", url);
+
+            // Update problem information
+            problemTitle.textContent =
+                `Problem ${String(id).padStart(2, "0")} : ${problem.title}`;
+
+            problemDescription.textContent = problem.description;
+
+            // Update instructions
+            instructionList.replaceChildren();
+
+            (problem.instructions || []).forEach(instruction => {
+                const li = document.createElement("li");
+                li.textContent = instruction;
+                instructionList.appendChild(li);
+            });
+
+            // Reset answer
+            answerCode.textContent = "";
+            answerLink.href = `./${id}.html`;
+
+            // Load HTML files
+            try {
+                setEditorStatus("コードを読み込んでいます...");
+
+                const [questionResponse, answerResponse] = await Promise.all([
+                    fetch(`./p${id}.html`),
+                    fetch(`./${id}.html`)
+                ]);
+
+                if (!questionResponse.ok) {
+                    throw new Error(`p${id}.htmlが見つかりません。`);
+                }
+
+                if (!answerResponse.ok) {
+                    throw new Error(`${id}.htmlが見つかりません。`);
+                }
+
+                const [questionCode, solutionCode] = await Promise.all([
+                    questionResponse.text(),
+                    answerResponse.text()
+                ]);
+
+                // Ignore outdated responses
+                if (thisRequest !== requestId) {
+                    return;
+                }
+
+                // Set editor
+                editor.value = questionCode;
+
+                // Set answer code
+                answerCode.textContent = solutionCode;
+
+                // Update preview
+                updatePreview();
+
+                setEditorStatus(
+                    "HTMLを編集すると、プレビューが更新されます。"
+                );
+
+            } catch (error) {
+                if (thisRequest !== requestId) {
+                    return;
+                }
+
+                editor.value = "";
+                answerCode.textContent = "";
+                preview.srcdoc = "";
+
+                setEditorStatus(error.message, true);
+            }
+        }
+
+        // Update preview
+        function updatePreview() {
+            clearTimeout(previewTimer);
+
+            previewTimer = setTimeout(() => {
+                preview.srcdoc = editor.value;
+            }, 250);
+        }
+
+        // Update preview when editing
+        editor.addEventListener("input", updatePreview);
+
+        // Tab key support
+        editor.addEventListener("keydown", event => {
+            if (event.key === "Tab") {
+                event.preventDefault();
+
+                const start = editor.selectionStart;
+                const end = editor.selectionEnd;
+
+                editor.setRangeText(
+                    "    ",
+                    start,
+                    end,
+                    "end"
+                );
+
+                updatePreview();
+            }
+        });
+
+        // Editor status
+        function setEditorStatus(message, isError = false) {
+            editorStatus.textContent = message;
+
+            editorStatus.classList.toggle("error", isError);
+            statusIndicator.classList.toggle("error", isError);
+        }
+
+        // Show error
+        function showError(message) {
+            problemList.replaceChildren();
+
+            const error = document.createElement("p");
+            error.className = "status error";
+            error.textContent = message;
+
+            problemList.appendChild(error);
+        }
+
+        // Initial animation
+        function initializeAnimation() {
+            if (!window.anime) {
+                return;
+            }
+
+            anime({
+                targets: ".page-heading",
+                opacity: [0, 1],
+                translateY: [12, 0],
+                duration: 650,
+                easing: "easeOutCubic"
+            });
+
+            anime({
+                targets: ".instructions",
+                opacity: [0, 1],
+                translateY: [12, 0],
+                duration: 650,
+                delay: 120,
+                easing: "easeOutCubic"
+            });
+
+            anime({
+                targets: ".section",
+                opacity: [0, 1],
+                translateY: [10, 0],
+                duration: 550,
+                delay: anime.stagger(90, { start: 200 }),
+                easing: "easeOutCubic"
+            });
+        }
+
+        // Start
+        initializeAnimation();
+        loadProblems();
+    </script>
+
+</body>
+</html>
