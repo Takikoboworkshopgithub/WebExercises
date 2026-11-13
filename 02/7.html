@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7. innerHTMLで内容を変更する</title>
+</head>
+<body>
+  <h1>innerHTMLで内容を変更する</h1>
+  <div id="content">変更前</div>
+  <button id="btn">変更</button>
+
+  <script>
+    function change() {
+      document.getElementById("content").innerHTML = "<h2>変更後！</h2>";
+    }
+
+    document.getElementById("btn").addEventListener("click", change);
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4. 背景色の切り替え</title>
+</head>
+<body>
+  <h1>背景色の切り替え</h1>
+  <button id="btn">変更</button>
+
+  <script>
+    let black = false;
+
+    function changeColor() {
+      if (black) {
+        document.body.style.backgroundColor = "white";
+      } else {
+        document.body.style.backgroundColor = "black";
+      }
+
+      black = !black;
+    }
+
+    document.getElementById("btn").addEventListener("click", changeColor);
+  </script>
+</body>
+</html>

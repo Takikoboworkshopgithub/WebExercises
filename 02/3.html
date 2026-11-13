@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3. 商品価格の検索</title>
+</head>
+<body>
+  <h1>商品価格の検索</h1>
+  <p>商品名を入力してください。</p>
+  <input id="name" type="text">
+  <button onclick="searchPrice()">価格を検索</button>
+  <p id="result"></p>
+
+  <script>
+    const prices = {
+      apple: 170,
+      orange: 90,
+      lemon: 110,
+      grape: 250
+    };
+
+    function searchPrice() {
+      const name = document.getElementById("name").value;
+
+      if (prices[name] !== undefined) {
+        document.getElementById("result").textContent = prices[name] + "円";
+      } else {
+        document.getElementById("result").textContent = "商品が見つかりません";
+      }
+    }
+  </script>
+</body>
+</html>

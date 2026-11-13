@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8. createElementとappendChildで要素を追加する</title>
+</head>
+<body>
+  <h1>createElementとappendChildで要素を追加する</h1>
+  <button id="btn">追加</button>
+  <div id="list"></div>
+
+  <script>
+    function add() {
+      const p = document.createElement("p");
+      p.textContent = "新しい項目";
+
+      document.getElementById("list").appendChild(p);
+    }
+
+    document.getElementById("btn").addEventListener("click", add);
+  </script>
+</body>
+</html>

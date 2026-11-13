@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1. カウンター</title>
+</head>
+<body>
+  <h1>カウンター</h1>
+  <p id="count">0</p>
+  <button onclick="countUp()">カウントアップ</button>
+
+  <script>
+    let count = 0;
+
+    function countUp() {
+      count++;
+      document.getElementById("count").textContent = count;
+    }
+  </script>
+</body>
+</html>

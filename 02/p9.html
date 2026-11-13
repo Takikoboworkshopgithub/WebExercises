@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>9. 10秒ぴったりチャレンジ</title>
+</head>
+<body>
+  <button id="level1">1：5秒</button>
+  <button id="level2">2：10秒</button>
+  <button id="level3">3：20秒</button>
+
+  <p id="target">目標時間：未選択</p>
+
+  <button id="start" disabled>スタート</button>
+  <button id="stop" disabled>ストップ</button>
+
+  <p id="result">結果：---</p>
+
+  <script>
+    let targetTime = 0;
+    let startTime;
+
+    function selectLevel(time) {
+      targetTime = time;
+      document.getElementById("target").textContent =
+        "目標時間：" + targetTime + "秒";
+
+      document.getElementById("start").disabled = false;
+    }
+
+    function startGame() {
+      startTime = new Date();
+
+      document.getElementById("start").disabled = true;
+      document.getElementById("stop").disabled = false;
+    }
+
+    function stopGame() {
+      // ここを穴埋め
+    }
+
+    document.getElementById("level1").addEventListener("click", function () {
+      selectLevel(5);
+    });
+
+    document.getElementById("level2").addEventListener("click", function () {
+      selectLevel(10);
+    });
+
+    document.getElementById("level3").addEventListener("click", function () {
+      selectLevel(20);
+    });
+
+    document.getElementById("start").addEventListener("click", startGame);
+    document.getElementById("stop").addEventListener("click", stopGame);
+  </script>
+</body>
+</html>

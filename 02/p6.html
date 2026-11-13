@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>6. activeクラスの切り替え</title>
+
+  <style>
+    .active {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <p>項目1</p>
+  <p>項目2</p>
+  <p>項目3</p>
+  <p>項目4</p>
+  <p>項目5</p>
+
+  <script>
+    const pList = document.getElementsByTagName("p");
+    let index = 0;
+
+    function move(event) {
+      if (event.key === "ArrowDown") index++;
+      if (event.key === "ArrowUp") index--;
+
+      if (index < 0) index = 0;
+      if (index > 4) index = 4;
+
+      for (let i = 0; i < 5; i++) {
+        pList[i].classList.remove("active");
+      }
+
+      // ここを穴埋め
+    }
+
+    document.addEventListener("keydown", move);
+  </script>
+</body>
+</html>

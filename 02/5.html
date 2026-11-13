@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5. 上下キーで文字色を赤くする</title>
+</head>
+<body>
+  <h1>上下キーで文字色を赤くする</h1>
+  <p>項目1</p>
+  <p>項目2</p>
+  <p>項目3</p>
+  <p>項目4</p>
+  <p>項目5</p>
+
+  <script>
+    const pList = document.getElementsByTagName("p");
+    let index = 0;
+
+    function move(event) {
+      if (event.key === "ArrowDown") {
+        index++;
+      }
+      if (event.key === "ArrowUp") {
+        index--;
+      }
+
+      if (index < 0) index = 0;
+      if (index > 4) index = 4;
+
+      for (let i = 0; i < 5; i++) {
+        pList[i].style.color = "black";
+      }
+
+      pList[index].style.color = "red";
+    }
+
+    document.addEventListener("keydown", move);
+  </script>
+</body>
+</html>
